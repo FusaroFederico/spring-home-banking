@@ -1,0 +1,19 @@
+/************
+Dashboard style
+************/
+#content {
+  font-family: Arial, sans-serif;
+  padding: 1rem;
+}
+.user-info {
+  background: #f0f0f0;
+  padding: 1rem;
+  border-radius: 8px;
+  max-width: 400px;
+}
+.user-info p {
+  margin: 0.5rem 0;
+}
+.error {
+  color: red;
+}
