@@ -8,13 +8,14 @@ async function loadUserData() {
   console.log("Token salvato:", token);
 
   if(!token){
-	contentDiv.innerHTML = `<p class="error">Token mancante. Effettua il login.</p>`;
+	contentDiv.innerHTML = `<p class="error">Accesso negato. Effettua il login.</p>
+							<a href="login.html"><button> Login </button></a>`;
   } else {
 	  console.log("Invio fetch a /api/users/me con headers:", {
 	    Authorization: `Bearer ${token}`
 	  });
 	  
-		fetch('/api/users/me', {
+		await fetch('/api/users/me', {
 	        method: 'GET',
 	        headers: {
 	          'Authorization': `Bearer ${token}`,
@@ -44,6 +45,29 @@ async function loadUserData() {
 	        `;
 	        contentDiv.innerHTML = '';
 	        contentDiv.appendChild(userDiv);
+	        // recupera le info sul conto
+	        fetch('/api/accounts/me', {
+				method: "GET",
+      			headers: { 'Authorization': `Bearer ${token}` }
+    			})
+			.then(response => {
+				if(!response.ok){
+					if(response.status === 404){
+						// Nessun conto esistente => bottone per crearne uno
+					      document.getElementById('noAccountSection').style.display = 'block';
+					      document.getElementById('createAccountBtn').addEventListener('click', createAccount);
+					} else {
+						throw new Error("Errore durante il caricamento dei dati.");
+					}
+				}
+				
+				return response.json();
+			})
+			.then(accData => {
+			  document.getElementById('iban').innerText = accData.iban;
+		      document.getElementById('balance').innerText = accData.balance.toFixed(2);
+		      document.getElementById('accountSection').style.display = 'block';
+			});
 	      })
 	      .catch(error => {
 	        contentDiv.innerHTML = `<p class="error">${error.message}</p>`;
@@ -58,9 +82,32 @@ function logout() {
   window.location.href = 'login.html';
 }
 
+async function createAccount() {
+  const token = localStorage.getItem('token');
+
+  try {
+    const res = await fetch('/api/accounts/create', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+
+    if (!res.ok) throw new Error('Failed to create account');
+
+    alert('Conto creato con successo!');
+    window.location.reload();
+
+  } catch (err) {
+    console.error(err);
+    alert('Non è stato possibile creare il conto.');
+  }
+}
+
 // Espone le funzioni nel contesto globale (per i pulsanti onclick)
 window.logout = logout;
 window.loadUserData = loadUserData;
+window.createAccount = createAccount;
 
 document.addEventListener('DOMContentLoaded', () => {
   console.log("📦 DOM completamente caricato");

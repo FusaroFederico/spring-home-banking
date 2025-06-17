@@ -10,8 +10,20 @@
 	    <title>Dashboard</title>
 	</head>
 	<body>
+		<!-- User Info -->
 		<div id="content">
 			Caricamento in corso...
+		</div>
+	
+		<!-- Account Info -->
+		<div id="accountSection" style="display: none;">
+		  <p><strong>IBAN:</strong> <span id="iban"></span></p>
+		  <p><strong>Saldo:</strong> € <span id="balance"></span></p>
+		</div>
+
+		<div id="noAccountSection" style="display: none;">
+		  <p>Non hai ancora un conto.</p>
+		  <button id="createAccountBtn">Crea un conto</button>
 		</div>
 		
 		<!-- Script -->
