@@ -3,6 +3,9 @@ package com.banking.home.spring.model;
 import java.util.List;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -34,6 +37,7 @@ public class User {
 
 	@NotBlank
     @Column(name = "password", nullable = false)
+	@JsonIgnore
     private String password;
 
 	@NotNull
@@ -50,9 +54,11 @@ public class User {
     private String lastName;
     
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonBackReference
     private List<Account> accounts;
     
     @ManyToMany(fetch = FetchType.EAGER)
+    @JsonIgnore
     private Set<Role> roles;
 
     // getters and setters
