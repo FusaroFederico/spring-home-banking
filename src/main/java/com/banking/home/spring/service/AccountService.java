@@ -31,6 +31,20 @@ public class AccountService {
         account.setBalance(0.0);
         return accountRepo.save(account);
     }
+    
+    public Account findById(Long id) {
+    	if (accountRepo.existsById(id)) {
+    		return accountRepo.findById(id).get();
+    	}
+    	throw new IllegalArgumentException("Conto non trovato.");
+    }
+    
+    public Account getAccountByIban(String iban) {
+    	if (accountRepo.existsByIban(iban)) {
+    		return accountRepo.findByIban(iban).get();
+    	}
+    	throw new IllegalArgumentException("Nessun conto trovato con questo iban.");
+    }
 
     public Account getAccountByUser(User user) {
         return accountRepo.findByOwnerEmail(user.getEmail())

@@ -1,6 +1,9 @@
 package com.banking.home.spring.model;
 
 
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
@@ -10,6 +13,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -40,7 +44,15 @@ public class Account {
     @JoinColumn(name = "user_id")
     @JsonManagedReference
     private User owner;
-
+    
+    @OneToMany(mappedBy = "sender")
+    @JsonIgnore
+    private List<Transaction> sendedTransactions;
+    
+    @OneToMany(mappedBy = "receiver")
+    @JsonIgnore
+    private List<Transaction> receivedTransactions;
+    
 	public Long getId() {
 		return id;
 	}
@@ -72,5 +84,21 @@ public class Account {
 	public void setOwner(User owner) {
 		this.owner = owner;
 	}
-    
+
+	public List<Transaction> getSendedTransactions() {
+		return sendedTransactions;
+	}
+
+	public void setSendedTransactions(List<Transaction> sendedTransactions) {
+		this.sendedTransactions = sendedTransactions;
+	}
+
+	public List<Transaction> getReceivedTransactions() {
+		return receivedTransactions;
+	}
+
+	public void setReceivedTransactions(List<Transaction> receivedTransactions) {
+		this.receivedTransactions = receivedTransactions;
+	}
+	
 }
