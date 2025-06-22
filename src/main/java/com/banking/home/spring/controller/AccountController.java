@@ -38,7 +38,7 @@ public class AccountController {
 	public ResponseEntity<?> getMyAccount(@AuthenticationPrincipal DatabaseUserDetails currentUser) {
 	    try {
 	        Account account = accountService.getAccountByUser(userService.findByEmail(currentUser.getUsername()).get());
-	        AccountResponse response = new AccountResponse(account.getIban(), account.getBalance());
+	        AccountResponse response = new AccountResponse(account.getId(), account.getIban(), account.getBalance());
 	        return ResponseEntity.ok(response);
 	    } catch (IllegalStateException e) {
 	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());

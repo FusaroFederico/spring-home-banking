@@ -32,7 +32,7 @@ public class AccountService {
         return accountRepo.save(account);
     }
     
-    public Account findById(Long id) {
+    public Account getById(Long id) {
     	if (accountRepo.existsById(id)) {
     		return accountRepo.findById(id).get();
     	}

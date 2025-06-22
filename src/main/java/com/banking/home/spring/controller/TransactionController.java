@@ -46,7 +46,7 @@ public class TransactionController {
 	        @AuthenticationPrincipal DatabaseUserDetails currentUser) {
 		
 		try {
-			Account account = accountService.findById(accountId);
+			Account account = accountService.getById(accountId);
 			
 			if (!account.getOwner().getId().equals(currentUser.getId())) {
 		        return ResponseEntity.status(HttpStatus.FORBIDDEN).build();

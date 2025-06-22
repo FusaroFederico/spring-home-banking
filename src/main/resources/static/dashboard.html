@@ -17,13 +17,35 @@
 	
 		<!-- Account Info -->
 		<div id="accountSection" style="display: none;">
-		  <p><strong>IBAN:</strong> <span id="iban"></span></p>
-		  <p><strong>Saldo:</strong> € <span id="balance"></span></p>
+			<h3>Il tuo Conto</h3>
+		    <p><strong>IBAN:</strong> <span id="iban"></span></p>
+		    <p><strong>Saldo:</strong> € <span id="balance"></span></p>
+			<!-- Transaction Section -->
+			<div>
+				<h3>Transazioni</h3>
+				<p><strong>Storico</strong></p>
+				<p id="noTransactions" style="display: none;">Nessuna transazione presente.</p>
+				<div id="transactionContainer" style="display: none; margin-bottom: 5px;">
+					<table border="1">
+					    <thead>
+					      <tr>
+					        <th>Data</th>
+					        <th>Conto mittente</th>
+					        <th>Conto destinatario</th>
+					        <th>Importo (€)</th>
+					      </tr>
+					    </thead>
+					    <tbody id="transactionHistory"></tbody>
+					</table>
+				</div>
+				<a href="transaction.html"><button>Effettua una transazione</button></a>
+			</div>
+			<!-- /Transaction Section -->
 		</div>
 
 		<div id="noAccountSection" style="display: none;">
-		  <p>Non hai ancora un conto.</p>
-		  <button id="createAccountBtn">Crea un conto</button>
+		    <p>Non hai ancora un conto.</p>
+		    <button id="createAccountBtn">Crea un conto</button>
 		</div>
 		
 		<!-- Script -->

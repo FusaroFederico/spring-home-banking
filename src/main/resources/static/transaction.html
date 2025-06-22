@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html lang="en">
+	<head>
+		<!-- Required meta tags -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!-- CSS -->
+		<link rel="stylesheet" href="/css/style.css">
+		
+	    <title>Transazione</title>
+	</head>
+	<body>
+		<h2>Effettua una transazione</h2>
+		<div>
+			<!-- Transaction form -->
+			<form id="transactionForm">
+				  <label for="iban">IBAN destinatario:</label>
+				  <input type="text" id="iban" required><br>
+
+				  <label for="amount">Importo (€):</label>
+				  <input type="number" id="amount" step="0.01" min="0.01" required><br>
+				  
+				  <label for="description">Descrizione</label>
+				  <textarea id="description"></textarea>
+
+				  <button type="submit">Invia</button>
+				  <p id="transactionMessage"></p>
+			</form>
+			<!-- /Transaction form -->
+			<a href="dashboard.html"><button>Torna indietro</button></a>
+		</div>
+		<!-- Script -->
+	    <script src="/js/transaction.js" defer></script>
+	</body>
+</html>

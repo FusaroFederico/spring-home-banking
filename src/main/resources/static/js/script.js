@@ -67,6 +67,41 @@ async function loadUserData() {
 			  document.getElementById('iban').innerText = accData.iban;
 		      document.getElementById('balance').innerText = accData.balance.toFixed(2);
 		      document.getElementById('accountSection').style.display = 'block';
+		      
+		      // recupera i dati sulle transazioni
+			  fetch('/api/transactions/account/' + accData.id, {
+						method: "GET",
+      					headers: { 'Authorization': `Bearer ${token}` }
+    			})
+    			.then(res => {
+					if (!res.ok) {
+						if(res.status === 404) {
+							document.getElementById('noTransactions').style.display = 'block';
+						} else {
+							throw new Error("Errore nel caricamento dello storico transizioni.");
+						}
+					}
+					return res.json();
+				})
+				.then(txData => {
+					if(txData.length === 0){
+						document.getElementById('noTransactions').style.display = 'block';
+					} else {
+						const txHistory = document.getElementById('transactionHistory');
+						txHistory.innerHTML = ` `;
+						txData.forEach(tx => {
+							const row = document.createElement('tr');
+							row.innerHTML = ` 
+								  <td>${new Date(tx.timestamp).toLocaleString()}</td>
+						          <td>${tx.senderIban}</td>
+						          <td>${tx.receiverIban}</td>
+						          <td>${tx.amount.toFixed(2)}</td>
+	          					`;
+	          				txHistory.appendChild(row);
+						});
+						document.getElementById('transactionContainer').style.display = 'block';
+					}
+				});
 			});
 	      })
 	      .catch(error => {
@@ -155,8 +190,8 @@ document.addEventListener('DOMContentLoaded', () => {
           body: JSON.stringify(body)
         });
 
-        if (!res.ok) throw new Error('Registration failed');
-        alert('Account created, you can now log in.');
+        if (!res.ok) throw new Error('Registrazione fallita');
+        alert('Accoun creato, ora puoi effettuare il login.');
         window.location.href = 'login.html';
       } catch (err) {
         document.getElementById('registerError').innerText = err.message;
