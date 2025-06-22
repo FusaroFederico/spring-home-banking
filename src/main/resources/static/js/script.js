@@ -3,13 +3,16 @@ const apiBase = '/api/auth';
 console.log("Script caricato");
 
 async function loadUserData() {
-  const contentDiv = document.getElementById('content');
+  const userInfoDiv = document.getElementById('userInfo');
+  const errorMsg = document.getElementById('errorMsg');
   const token = localStorage.getItem('token');
   console.log("Token salvato:", token);
 
   if(!token){
-	contentDiv.innerHTML = `<p class="error">Accesso negato. Effettua il login.</p>
-							<a href="login.html"><button> Login </button></a>`;
+	document.getElementById('navbar').classList.add('d-none');
+	errorMsg.innerText = "Accesso negato. Effettua il login!";
+	document.getElementById('loadingIndicator').classList.add('d-none');
+	document.getElementById('errorContainer').classList.remove('d-none');
   } else {
 	  console.log("Invio fetch a /api/users/me con headers:", {
 	    Authorization: `Bearer ${token}`
@@ -33,18 +36,12 @@ async function loadUserData() {
           return response.json();
         })
         .then(user => {
-	        // costruisce html con i dati utente e li inserisce nel div
-	        const userDiv = document.createElement('div');
-	        userDiv.className = 'user-info';
-	        userDiv.innerHTML = `
-	          <h2>Benvenuto, ${user.firstName}!</h2>
-	          <p><strong>Nome:</strong> ${user.firstName}</p>
-	          <p><strong>Cognome:</strong> ${user.lastName}</p>
-	          <p><strong>Email:</strong> ${user.email}</p>
-	          <button onclick="logout()">Logout</button>
-	        `;
-	        contentDiv.innerHTML = '';
-	        contentDiv.appendChild(userDiv);
+	        // inserisce i dati utente nell'html
+	        document.getElementById('firstName').innerText = user.firstName;
+	        document.getElementById('lastName').innerText = user.lastName;
+	        document.getElementById('email').innerText = user.email;
+	        userInfoDiv.classList.remove('d-none');
+	        document.getElementById('loadingIndicator').classList.add('d-none');
 	        // recupera le info sul conto
 	        fetch('/api/accounts/me', {
 				method: "GET",
@@ -54,7 +51,7 @@ async function loadUserData() {
 				if(!response.ok){
 					if(response.status === 404){
 						// Nessun conto esistente => bottone per crearne uno
-					      document.getElementById('noAccountSection').style.display = 'block';
+					      document.getElementById('noAccountSection').classList.remove('d-none');
 					      document.getElementById('createAccountBtn').addEventListener('click', createAccount);
 					} else {
 						throw new Error("Errore durante il caricamento dei dati.");
@@ -66,7 +63,7 @@ async function loadUserData() {
 			.then(accData => {
 			  document.getElementById('iban').innerText = accData.iban;
 		      document.getElementById('balance').innerText = accData.balance.toFixed(2);
-		      document.getElementById('accountSection').style.display = 'block';
+		      document.getElementById('accountSection').classList.remove('d-none');
 		      
 		      // recupera i dati sulle transazioni
 			  fetch('/api/transactions/account/' + accData.id, {
@@ -76,7 +73,7 @@ async function loadUserData() {
     			.then(res => {
 					if (!res.ok) {
 						if(res.status === 404) {
-							document.getElementById('noTransactions').style.display = 'block';
+							document.getElementById('noTransactions').classList.remove('d-none');
 						} else {
 							throw new Error("Errore nel caricamento dello storico transizioni.");
 						}
@@ -85,7 +82,7 @@ async function loadUserData() {
 				})
 				.then(txData => {
 					if(txData.length === 0){
-						document.getElementById('noTransactions').style.display = 'block';
+						document.getElementById('noTransactions').classList.remove('d-none');
 					} else {
 						const txHistory = document.getElementById('transactionHistory');
 						txHistory.innerHTML = ` `;
@@ -99,13 +96,16 @@ async function loadUserData() {
 	          					`;
 	          				txHistory.appendChild(row);
 						});
-						document.getElementById('transactionContainer').style.display = 'block';
+						document.getElementById('transactionContainer').classList.remove('d-none');
+						
 					}
 				});
 			});
 	      })
 	      .catch(error => {
-	        contentDiv.innerHTML = `<p class="error">${error.message}</p>`;
+			errorMsg.innerText = error.message;
+			document.getElementById('loadingIndicator').classList.add('d-none');
+			document.getElementById('errorContainer').classList.remove('d-none');
 	    });
   }
   
@@ -200,7 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Carica i dati utente solo se siamo in dashboard
-  if (document.getElementById('content')) {
+  if (document.getElementById('userInfo')) {
     loadUserData();
   }
 });

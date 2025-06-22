@@ -4,51 +4,95 @@
 		<!-- Required meta tags -->
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<!-- Bootstrap CSS -->
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
 		<!-- CSS -->
 		<link rel="stylesheet" href="/css/style.css">
 		
 	    <title>Dashboard</title>
 	</head>
-	<body>
-		<!-- User Info -->
-		<div id="content">
-			Caricamento in corso...
-		</div>
-	
-		<!-- Account Info -->
-		<div id="accountSection" style="display: none;">
-			<h3>Il tuo Conto</h3>
-		    <p><strong>IBAN:</strong> <span id="iban"></span></p>
-		    <p><strong>Saldo:</strong> € <span id="balance"></span></p>
-			<!-- Transaction Section -->
-			<div>
-				<h3>Transazioni</h3>
-				<p><strong>Storico</strong></p>
-				<p id="noTransactions" style="display: none;">Nessuna transazione presente.</p>
-				<div id="transactionContainer" style="display: none; margin-bottom: 5px;">
-					<table border="1">
-					    <thead>
-					      <tr>
-					        <th>Data</th>
-					        <th>Conto mittente</th>
-					        <th>Conto destinatario</th>
-					        <th>Importo (€)</th>
-					      </tr>
-					    </thead>
-					    <tbody id="transactionHistory"></tbody>
-					</table>
+	<body class="bg-light">
+		<!-- Navbar -->
+		<nav id="navbar" class="navbar navbar-expand-lg navbar-dark bg-primary">
+	      <div class="container">
+	        <a class="navbar-brand" href="#">SpringBank</a>
+	        <button class="btn btn-outline-light" onclick="logout()">Logout</button>
+	      </div>
+	    </nav>
+		<div class="container py-5 min-vh-100">
+			
+			<!-- Loading Indicator -->
+			<div id="loadingIndicator" class="text-center mb-4">
+		        <div class="spinner-border" role="status">
+		            <span class="visually-hidden">Loading...</span>
+		        </div>
+		        <p>Caricamento in corso...</p>
+			 </div>
+			 
+			 <!-- Error Container -->
+			 <div id="errorContainer" class="d-flex flex-column align-items-center justify-content-center text-center d-none">
+				 <p id="errorMsg" class="alert alert-danger" role="alert">Si è verificato un errore.</p>
+				 <a href="login.html" class="btn btn-primary mt-3">Login</a>
+			 </div>
+			 
+			 <!-- User Info -->
+			 <div id="userInfo" class="card mb-4 d-none">
+				<div class="card-body">
+					<h3 class="card-title">Info Utente</h3>
+					<p class="card-text"><strong>Nome:</strong> <span id="firstName"></span><strong> Cognome:</strong> <span id="lastName"></span></p>
+					<p class="card-text"><strong>Email:</strong> <span id="email"></span></p>
 				</div>
-				<a href="transaction.html"><button>Effettua una transazione</button></a>
-			</div>
-			<!-- /Transaction Section -->
-		</div>
+			 </div>
+		
+			<!-- Account Info -->
+			<div id="accountSection" class="d-none">
+		        <div class="card mb-4">
+		          <div class="card-body">
+		            <h3 class="card-title">Il tuo Conto</h3>
+		            <p class="card-text"><strong>IBAN:</strong> <span id="iban"></span></p>
+		            <p class="card-text"><strong>Saldo:</strong> € <span id="balance"></span></p>
+		          </div>
+		        </div>
 
-		<div id="noAccountSection" style="display: none;">
-		    <p>Non hai ancora un conto.</p>
-		    <button id="createAccountBtn">Crea un conto</button>
+		        <!-- Transaction History -->
+		        <div class="card">
+		          <div class="card-body">
+		            <h4 class="card-title">Storico Transazioni</h4>
+		            <p id="noTransactions" class="d-none">Nessuna transazione presente.</p>
+		            <div id="transactionContainer" class="d-none">
+		              <div class="table-responsive">
+		                <table class="table table-bordered table-striped">
+		                  <thead class="table-light">
+		                    <tr>
+		                      <th>Data</th>
+		                      <th>Conto mittente</th>
+		                      <th>Conto destinatario</th>
+		                      <th>Importo (€)</th>
+		                    </tr>
+		                  </thead>
+		                  <tbody id="transactionHistory"></tbody>
+		                </table>
+		              </div>
+		            </div>
+		            <a href="transaction.html" class="btn btn-primary mt-3">Effettua una transazione</a>
+		          </div>
+		        </div>
+		      </div>
+
+		      <!-- Sezione per chi non ha un conto -->
+		      <div id="noAccountSection" class="d-none">
+		        <div class="alert alert-warning text-center">
+		          <p>Non hai ancora un conto.</p>
+		          <button id="createAccountBtn" class="btn btn-success">Crea un conto</button>
+		        </div>
+		      </div>
 		</div>
 		
-		<!-- Script -->
-	    <script src="/js/script.js" defer></script>
+		<!-- Bootstarp JS -->
+	    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+		<!-- My JS -->
+		<script src="/js/script.js" defer></script>
 	</body>
 </html>

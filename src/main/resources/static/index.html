@@ -5,12 +5,66 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		
-	  	<title>MyBank - Home</title>
+		<!-- Bootstrap CSS -->
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+		
+	  	<title>SpringBank - Home</title>
 	</head>
 	<body>
-		 <h1>Welcome to MyBank</h1>
-		 <p>Your trusted partner in digital banking.</p>
-		 <a href="login.html">Login</a> |
-		 <a href="register.html">Register</a>
+		    <!-- Navbar -->
+		    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+		      <div class="container">
+		        <a class="navbar-brand" href="#">SpringBank</a>
+		        <div class="d-flex">
+		          <a href="login.html" class="btn btn-outline-light me-2">Accedi</a>
+		          <a href="register.html" class="btn btn-light">Registrati</a>
+		        </div>
+		      </div>
+		    </nav>
+			<!-- /Navbar -->
+		    <header class="bg-white shadow-sm py-5 mb-5">
+		      <div class="container text-center">
+		        <h1 class="display-4">Benvenuto in SpringBank</h1>
+		        <p class="lead">Gestisci il tuo conto corrente in modo semplice, sicuro e veloce.</p>
+		      </div>
+		    </header>
+
+			<!-- Content -->
+		    <section class="container mb-5">
+		      <div class="row text-center">
+		        <div class="col-md-4 mb-4">
+		          <div class="card h-100">
+		            <div class="card-body">
+		              <h5 class="card-title">Conto Digitale</h5>
+		              <p class="card-text">Apri un conto gratuito con IBAN italiano, saldo in tempo reale e operazioni tracciate.</p>
+		            </div>
+		          </div>
+		        </div>
+		        <div class="col-md-4 mb-4">
+		          <div class="card h-100">
+		            <div class="card-body">
+		              <h5 class="card-title">Carte di Debito e Credito</h5>
+		              <p class="card-text">Richiedi la tua carta per pagamenti online e in negozio in tutta sicurezza.</p>
+		            </div>
+		          </div>
+		        </div>
+		        <div class="col-md-4 mb-4">
+		          <div class="card h-100">
+		            <div class="card-body">
+		              <h5 class="card-title">Gestione Movimenti</h5>
+		              <p class="card-text">Monitora tutte le transazioni in entrata e uscita in tempo reale dalla tua area personale.</p>
+		            </div>
+		          </div>
+		        </div>
+		      </div>
+		    </section>
+			<!-- /Content -->
+
+		    <footer class="bg-primary text-white text-center py-3">
+		      <small>&copy; 2025 SpringBank. Tutti i diritti riservati.</small>
+		    </footer>
+
+			<!-- Bootstrap JS -->
+		    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 	</body>
 </html>
