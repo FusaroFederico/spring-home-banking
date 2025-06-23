@@ -53,6 +53,10 @@ public class Account {
     @JsonIgnore
     private List<Transaction> receivedTransactions;
     
+    @OneToMany(mappedBy = "account")
+    @JsonIgnore
+    private List<Card> cards;
+    
 	public Long getId() {
 		return id;
 	}
@@ -99,6 +103,14 @@ public class Account {
 
 	public void setReceivedTransactions(List<Transaction> receivedTransactions) {
 		this.receivedTransactions = receivedTransactions;
+	}
+
+	public List<Card> getCards() {
+		return cards;
+	}
+
+	public void setCards(List<Card> cards) {
+		this.cards = cards;
 	}
 	
 }
