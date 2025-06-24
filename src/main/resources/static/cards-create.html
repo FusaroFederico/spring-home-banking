@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html lang="en">
+	<head>
+		<!-- Required meta tags -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<!-- Bootstrap CSS -->
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+		<!-- CSS -->
+		<link rel="stylesheet" href="/css/style.css">
+		
+	    <title>Creazione Carta</title>
+	</head>
+	<body>
+		<div class="container py-5">
+	      <h2 class="mb-4 text-center">Crea una nuova Carta</h2>
+	      <div class="card shadow-sm mb-5">
+	        <div class="card-body">
+			  <!-- Card form -->
+			  <form id="createCardForm" class="row g-3">
+	            <div class="col-auto">
+	              <select class="form-select" id="cardType" required>
+	                <option value="" disabled selected>Tipo di carta</option>
+	                <option value="DEBIT">Debito</option>
+	                <option value="PREPAID">Prepagata</option>
+	              </select>
+	            </div>
+	            <div class="col-auto">
+	              <button type="submit" class="btn btn-success">Crea</button>
+	            </div>
+	          </form>
+	          <p id="createCardMessage" class="mt-2"></p>
+			  <!-- /Card form -->
+	        </div>
+	      </div>
+		  <div class="text-center mt-2">
+		  		<a href="dashboard.html" class="btn btn-outline-secondary btn-sm">Torna indietro</a>
+		  </div>
+		<!-- Bootstarp JS -->
+	    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+		<!-- Card JS -->
+		<script src="/js/card.js" defer></script>
+	</body>
+</html>

@@ -48,6 +48,7 @@ public class SecurityConfiguration {
                       "/", "/index.html",
                       "/login.html", "/register.html", 
                       "/dashboard.html", "/transaction.html",
+                      "/cards-create.html",
                       "/images/**", "/favicon.ico",
                       "/js/**", "/css/**",
                       "/api/auth/**"
