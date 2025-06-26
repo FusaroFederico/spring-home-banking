@@ -17,6 +17,8 @@ import com.banking.home.spring.security.DatabaseUserDetails;
 import com.banking.home.spring.service.CardService;
 import com.banking.home.spring.service.UserService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/cards")
 public class CardController {
@@ -48,7 +50,7 @@ public class CardController {
 	 
 	 @PostMapping("/topup")
 	 public ResponseEntity<?> topUpCard(@AuthenticationPrincipal DatabaseUserDetails currentUser,
-	                                    @RequestBody TopUpRequest request) {
+			 							@Valid @RequestBody TopUpRequest request) {
 	     try {
 	         cardService.topUpPrepaidCard(userService.findByEmail(currentUser.getUsername()).get(), request.getCardNumber(), request.getAmount());
 	         return ResponseEntity.ok("Ricarica effettuata con successo.");

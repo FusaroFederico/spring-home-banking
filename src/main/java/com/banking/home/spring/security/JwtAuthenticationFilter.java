@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,11 +22,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
+    private final HandlerExceptionResolver handlerExceptionResolver;
     
-    public JwtAuthenticationFilter(JwtService jwtService, UserDetailsService userDetailsService) {
+    public JwtAuthenticationFilter(JwtService jwtService, UserDetailsService userDetailsService, HandlerExceptionResolver handlerExceptionResolver) {
     	
 			this.jwtService = jwtService;
 			this.userDetailsService = userDetailsService;
+			this.handlerExceptionResolver = handlerExceptionResolver;
 	}
 
     @Override
@@ -51,6 +54,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
         
+        try {
+        
         	// Estrae il token JWT
             final String token = authHeader.substring(7);
             final String userEmail = jwtService.extractUsername(token);
@@ -71,6 +76,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             }
             // prosegue la catena dei filtri
             filterChain.doFilter(request, response);
-        
+        } catch (Exception ex) {
+        	// Gestiamo le eccezioni passando al gestore globale
+            handlerExceptionResolver.resolveException(request, response, null, ex);
+        }
     }
 }

@@ -21,6 +21,8 @@ import com.banking.home.spring.security.DatabaseUserDetails;
 import com.banking.home.spring.service.AccountService;
 import com.banking.home.spring.service.TransactionService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/transactions")
 public class TransactionController {
@@ -31,7 +33,7 @@ public class TransactionController {
 	AccountService accountService;
 	
 	@PostMapping("/create")
-    public ResponseEntity<?> createTransaction(@RequestBody TransactionRequest request) {
+    public ResponseEntity<?> createTransaction(@Valid @RequestBody TransactionRequest request) {
 		try {
 			Transaction newTr = transactionService.transfer(request);
 			return ResponseEntity.ok(newTr);
